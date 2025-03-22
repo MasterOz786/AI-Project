@@ -78,3 +78,8 @@ If serving via Flask:
 | ------ | ----------- | -------------------- |
 | GET    | `/api/data` | Fetch sample data    |
 | POST   | `/api/send` | Send data to backend |
+
+
+## Deployment link
+
+https://emotion-wave-detector.onrender.com
