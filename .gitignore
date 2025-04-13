@@ -7,6 +7,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+pyvenv64.cfg
 .Python
 build/
 develop-eggs/
@@ -15,7 +16,7 @@ downloads/
 eggs/
 .eggs/
 lib/
-lib64/
+*/lib64/*
 parts/
 sdist/
 var/
@@ -172,3 +173,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+bin/*
+audio/features/*
+audio/TESS_Toronto_emotional_speech_set_data
+
