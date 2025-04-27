@@ -4,9 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#1E3A8A", // Deep blue
-        secondary: "#10B981", // Emerald green
-        accent: "#F59E0B", // Amber
+        "deep-purple": "#2E1A47",
+        "vibrant-purple": "#A855F7",
+        "light-gray": "#E5E7EB",
       },
     },
   },
