@@ -1,5 +1,48 @@
+# Byte-compiled / optimized / DLL files
 __pycache__/
-env/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+
+# Virtual environment
 venv/
-node_modules/
+ENV/
+env/
+.venv/
+
+# VS Code settings
+.vscode/
+
+# PyCharm
+.idea/
+
+# macOS
 .DS_Store
+
+# Test and coverage reports
+htmlcov/
+.tox/
+.nox/
+coverage.*
+.cache
+.pytest_cache/
+
+# Logs and local files
+*.log
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebooks (if any)
+.ipynb_checkpoints/
+
+# SQLite databases (if used locally)
+*.sqlite3
+*.db
+
+# Node modules (if frontend is present)
+node_modules/
