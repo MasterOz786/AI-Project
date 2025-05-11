@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import Loader from "./Loader";
 
 function TextAnalysis({ text, setText, handleAnalysis, loading, error }) {
   const { ref, inView } = useInView({
@@ -16,6 +17,9 @@ function TextAnalysis({ text, setText, handleAnalysis, loading, error }) {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="py-16 container mx-auto px-6"
     >
+      {/* Loader */}
+      {loading && <Loader />}
+
       <h2 className="text-3xl font-semibold mb-8 text-center gradient-text">
         Text Sentiment Analysis
       </h2>
@@ -55,7 +59,7 @@ function TextAnalysis({ text, setText, handleAnalysis, loading, error }) {
               onClick={handleAnalysis}
               disabled={loading}
             >
-              {loading ? "Analyzing..." : "Analyze Sentiment"}
+              {"Analyze Sentiment"}
             </motion.button>
           </motion.div>
         </div>
