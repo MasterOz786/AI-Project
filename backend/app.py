@@ -1,14 +1,22 @@
 from flask import Flask, render_template, request, jsonify
 import os
 import torch
-import numpy as np
 import soundfile as sf
 from pydub import AudioSegment
 from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
 from model import EmotionModel
 from prepare_data import extract_features
+from flask_cors import CORS
+from dotenv import load_dotenv
+# Import our modules
+from modules.youtube_api import fetch_youtube_data
+from modules.sentiment_analyzer import analyze_comments
 
 app = Flask(__name__)
+CORS(app)
+
+# Load environment variables
+load_dotenv()
 
 # Define upload directory
 UPLOAD_FOLDER = "uploads"
@@ -132,33 +140,38 @@ def analyze_text():
     result = analyze_text_sentiment(text)
     return jsonify(result)
 
-@app.route("/api/analyze", methods=["POST"])
+@app.route('/api/analyze', methods=['POST'])
 def analyze_video():
-    """Handle YouTube video analysis."""
     try:
         data = request.json
-        video_id = data.get("videoId")
-        if not video_id:
-            return jsonify({"error": "Video ID is required"}), 400
+        video_id = data.get('videoId')
         
-        # For now, return a mock response since YouTube API integration isn't implemented
-        mock_response = {
-            "video": {
-                "thumbnail": f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg",
-                "likes": 1000,
-                "shares": 500,
-                "comments": 100,
-                "title": "Sample Video"
+        if not video_id:
+            return jsonify({'error': 'Video ID is required'}), 400
+            
+        # Fetch video data and comments
+        video_data = fetch_youtube_data(video_id)
+        
+        # Analyze sentiment of comments
+        sentiment_results = analyze_comments(video_data['comments_text'])
+        
+        # Prepare response
+        response = {
+            'video': {
+                'thumbnail': f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg",
+                'likes': video_data['likes'],
+                'shares': video_data.get('shares', 0),  # YouTube API doesn't provide shares
+                'comments': len(video_data['comments_text']),
+                'title': video_data['title']
             },
-            "sentiment": {
-                "positive": 0.6,
-                "negative": 0.2,
-                "neutral": 0.2
-            }
+            'sentiment': sentiment_results
         }
-        return jsonify(mock_response)
+        
+        return jsonify(response)
+        
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print(f"Error: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

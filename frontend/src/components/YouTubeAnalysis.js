@@ -64,7 +64,7 @@ function YouTubeAnalysis({ loading, setLoading, error, setError }) {
         "http://localhost:5000/api/analyze",
         {
           videoId: videoId,
-          maxComments: 300,
+          maxComments: 100,
         },
         {
           headers: {

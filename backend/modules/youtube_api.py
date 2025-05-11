@@ -27,12 +27,12 @@ def fetch_youtube_data(video_id):
             raise ValueError(f"Video with ID {video_id} not found")
             
         video_data = video_response['items'][0]
-        
+        print(video_data)
         # Get comments
         comments_response = youtube.commentThreads().list(
             part="snippet",
             videoId=video_id,
-            maxResults=100,  # Adjust as needed
+            maxResults=1000,  # Adjust as needed
             textFormat="plainText"
         ).execute()
         
